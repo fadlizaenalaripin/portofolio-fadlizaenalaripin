@@ -1,9 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export', // ⬅️ WAJIB untuk Netlify (static)
-
+  output: 'export', 
   images: {
-    unoptimized: true, // ⬅️ WAJIB kalau pakai next/image di static
+    unoptimized: true, 
+  },
+  // Tambahkan ini agar library Spline diproses dengan benar saat export
+  transpilePackages: ['@splinetool/react-spline', '@splinetool/runtime'],
+  
+  // Opsional: Jika masih ada isu webpack pada library 3D
+  webpack: (config) => {
+    config.externals.push({ canvas: 'canvas' });
+    return config;
   },
 }
 

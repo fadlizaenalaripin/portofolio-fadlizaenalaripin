@@ -1,31 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { portfolioData } from '@/lib/data';
 import { ArrowRight, FileText, Volume2, Menu, X } from 'lucide-react';
-import dynamic from 'next/dynamic';
-
-// PERBAIKAN DI SINI: Menghapus '/next' dari path import
-const Spline = dynamic(
-  () => import('@splinetool/react-spline').then((mod) => mod.default),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="absolute inset-0 bg-black flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-      </div>
-    ),
-  }
-);
-
+import SplineBackground from '../client/SplineBackground'
 
 export default function Hero({ onNavClick }: { onNavClick: (section: string) => void }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // FUNGSI SUARA ROBOT (Text-to-Speech)
-  const speakGreeting = () => {
+  const speakGreeting = useCallback(() => {
     const text = `
       Initializing connection. 
       Welcome. I am the digital representative of Fadli, Zaenal, Aripin. 
@@ -34,8 +20,8 @@ export default function Hero({ onNavClick }: { onNavClick: (section: string) => 
       Feel free to explore the projects and engineered systems. 
       Intelligence is the ultimate frontier. System is now fully operational.
     `;
-    
-    if ('speechSynthesis' in window) {
+
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
       const msg = new SpeechSynthesisUtterance(text);
       
@@ -54,14 +40,15 @@ export default function Hero({ onNavClick }: { onNavClick: (section: string) => 
 
       window.speechSynthesis.speak(msg);
     }
-  };
+  }, []);
 
   const handleDownloadCV = () => {
+    // Pastikan file cvfadli.pdf ada di folder /public
     window.open('/cvfadli.pdf', '_blank');
   };
 
   useEffect(() => {
-    if ('speechSynthesis' in window) {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.getVoices();
     }
     const timer = setTimeout(() => {
@@ -70,24 +57,19 @@ export default function Hero({ onNavClick }: { onNavClick: (section: string) => 
 
     return () => {
       clearTimeout(timer);
-      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
     };
-  }, []);
+  }, [speakGreeting]);
 
   return (
     <section className="relative h-[100dvh] w-full bg-black overflow-hidden flex flex-col">
       
-      {/* 1. SPLINE BACKGROUND */}
-      <div className="absolute inset-0 z-0">
-        <div className="w-full h-full scale-[1.3] md:scale-100 translate-y-[8%] md:translate-y-0 flex items-center justify-center">
-          <Spline 
-            scene="https://prod.spline.design/enTt-tPufsllsL8h/scene.splinecode" 
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </div>
+      {/* 1. SPLINE BACKGROUND (ROBOT) */}
+      <SplineBackground />
 
-      {/* 2. OVERLAY */}
+      {/* 2. OVERLAY GRADIENT */}
       <div className="absolute inset-0 z-[1] bg-gradient-to-b from-black/80 via-transparent to-black/80 pointer-events-none" />
 
       {/* 3. HEADER NAMA & SPEAKER (ATAS) */}
@@ -101,7 +83,9 @@ export default function Hero({ onNavClick }: { onNavClick: (section: string) => 
         {/* Tombol Speaker AI */}
         <button 
           onClick={speakGreeting}
-          className={`pointer-events-auto p-4 rounded-full border border-white/10 transition-all duration-500 bg-black/40 backdrop-blur-md ${isPlaying ? 'bg-cyan-500 shadow-[0_0_20px_rgba(6,182,212,0.5)] border-cyan-400' : ''}`}
+          className={`pointer-events-auto p-4 rounded-full border border-white/10 transition-all duration-500 bg-black/40 backdrop-blur-md ${
+            isPlaying ? 'bg-cyan-500 shadow-[0_0_20px_rgba(6,182,212,0.5)] border-cyan-400' : 'hover:border-white/30'
+          }`}
         >
           <Volume2 size={18} className={`${isPlaying ? 'text-black animate-pulse' : 'text-white/40'}`} />
         </button>
@@ -109,13 +93,20 @@ export default function Hero({ onNavClick }: { onNavClick: (section: string) => 
 
       {/* 4. MAIN CONTENT (TENGAH) */}
       <div className="relative z-10 flex-1 flex flex-col justify-center items-center text-center px-6 pointer-events-none">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-10 md:text-left md:w-full md:px-6">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          className="mb-10 md:text-left md:w-full md:px-12"
+        >
           <h1 className="text-[12vw] md:text-8xl font-black tracking-tighter text-white leading-[0.8] uppercase">
             DATA <br /> <span className="text-white/20">INTELLIGENCE</span>
           </h1>
-          <p className="mt-4 text-white/30 text-[9px] tracking-[0.3em] font-bold uppercase">Specialized in ML & Analytics</p>
+        <p className="text-white/60 text-[9px] md:text-[10px] tracking-[0.5em] font-medium uppercase leading-relaxed">
+    Specialized in <span className="text-white opacity-100 font-bold">ML</span> & <span className="text-white opacity-100 font-bold">Analytics Engineering</span>
+  </p>
         </motion.div>
 
+        {/* Action Buttons */}
         <div className="flex flex-col gap-4 w-60 md:w-72 pointer-events-auto md:absolute md:bottom-32 md:right-12">
           <button 
             onClick={() => onNavClick('projects')}
@@ -136,11 +127,11 @@ export default function Hero({ onNavClick }: { onNavClick: (section: string) => 
       {/* 5. NAVBAR LAPTOP (BAWAH) */}
       <div className="hidden md:flex absolute bottom-10 left-0 w-full z-20 justify-center pointer-events-none px-4">
         <div className="flex items-center gap-6 lg:gap-8 pointer-events-auto bg-black/40 backdrop-blur-xl px-10 py-4 rounded-full border border-white/10 w-fit max-w-max mx-auto shadow-2xl overflow-hidden">
-          {['Home', 'About', 'Skills', 'Projects', 'Blog', 'Certificates', 'Contact'].map((item) => (
+          {['Home', 'About', 'Skills', 'Projects', 'Contact'].map((item) => (
             <button
               key={item}
               onClick={() => onNavClick(item.toLowerCase())}
-              className="text-[9px] lg:text-[10px] tracking-[0.3em] text-white/40 hover:text-white uppercase font-bold transition-all whitespace-nowrap"
+              className="text-[9px] lg:text-[10px] tracking-[0.3em] text-white/40 hover:text-white uppercase font-bold transition-all whitespace-nowrap px-2 py-1"
             >
               {item}
             </button>
@@ -177,7 +168,7 @@ export default function Hero({ onNavClick }: { onNavClick: (section: string) => 
               </div>
 
               <div className="flex-1 overflow-y-auto px-10 py-12 flex flex-col gap-6">
-                {['Home', 'About', 'Skills', 'Projects', 'Blog', 'Certificates', 'Contact'].map((item) => (
+                {['Home', 'About', 'Skills', 'Projects', 'Contact'].map((item) => (
                   <button
                     key={item}
                     onClick={() => { onNavClick(item.toLowerCase()); setIsMobileMenuOpen(false); }}
