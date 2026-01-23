@@ -8,7 +8,7 @@ import dynamic from 'next/dynamic';
 
 // PERBAIKAN DI SINI: Menghapus '/next' dari path import
 const Spline = dynamic(
-  () => import('@splinetool/react-spline'),
+  () => import('@splinetool/react-spline').then((mod) => mod.default),
   {
     ssr: false,
     loading: () => (
@@ -18,6 +18,7 @@ const Spline = dynamic(
     ),
   }
 );
+
 
 export default function Hero({ onNavClick }: { onNavClick: (section: string) => void }) {
   const [isPlaying, setIsPlaying] = useState(false);

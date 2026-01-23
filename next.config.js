@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export', // ⬅️ WAJIB untuk Netlify (static)
+
   images: {
-    // Gunakan remotePatterns jika kamu mengambil gambar dari URL luar di masa depan
-    domains: ['localhost'],
+    unoptimized: true, // ⬅️ WAJIB kalau pakai next/image di static
   },
-  // Bagian experimental: { appDir: true } DIHAPUS karena sudah default di Next.js 15
 }
 
 module.exports = nextConfig
