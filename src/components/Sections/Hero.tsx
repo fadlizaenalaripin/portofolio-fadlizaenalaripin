@@ -65,7 +65,8 @@ export default function Hero({ onNavClick }: { onNavClick: (section: string) => 
     <section className="relative h-[100dvh] w-full bg-black overflow-hidden flex flex-col">
       <SplineBackground />
 
-      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-black/80 via-transparent to-black/80 pointer-events-none" />
+      {/* GRADIENT DIUBAH MENJADI LEBIH TERANG (DARI 80 KE 40) AGAR ROBOT TERLIHAT JELAS */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-black/40 via-transparent to-black/40 pointer-events-none" />
 
       {/* HEADER NAMA & SPEAKER */}
       <div className="relative z-50 w-full flex justify-between items-start px-6 py-10 md:px-12 pointer-events-none">
@@ -94,18 +95,18 @@ export default function Hero({ onNavClick }: { onNavClick: (section: string) => 
             />
           </button>
 
-          {/* SUBTITLE */}
+          {/* SUBTITLE - BACKGROUND BIRU DIHAPUS, GANTI GAYA HOLOGRAM */}
           <div className="min-h-[40px] flex items-start justify-end">
             <AnimatePresence mode="wait">
               {activeWord && (
                 <motion.div
                   key={activeWord}
-                  initial={{ opacity: 0, y: 5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -5 }}
-                  className="bg-cyan-500 text-black px-3 py-1.5 rounded shadow-lg max-w-[180px] md:max-w-[400px]"
+                  initial={{ opacity: 0, x: 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -10 }}
+                  className="pr-3 border-r-2 border-cyan-500/50 max-w-[180px] md:max-w-[400px]"
                 >
-                  <p className="font-mono text-[9px] md:text-[10px] font-black uppercase leading-tight text-right break-words">
+                  <p className="font-mono text-[9px] md:text-[10px] font-bold uppercase leading-tight text-right break-words text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)] tracking-widest">
                     {activeWord}
                   </p>
                 </motion.div>
