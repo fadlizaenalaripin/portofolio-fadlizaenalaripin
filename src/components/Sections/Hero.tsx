@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { portfolioData } from '@/lib/data';
-import { ArrowRight, FileText, Volume2 } from 'lucide-react';
+import { ArrowRight, FileText, Waves } from 'lucide-react'; // Ganti ke Waves
 import SplineBackground from '../client/SplineBackground'
 
 export default function Hero({ onNavClick }: { onNavClick: (section: string) => void }) {
@@ -16,7 +16,7 @@ export default function Hero({ onNavClick }: { onNavClick: (section: string) => 
     "Specializing in Data Intelligence and Machine Learning engineering.",
     "Transforming complex datasets into actionable strategic assets.",
     "System is operational and ready for new challenges.",
-    "Open for project collaborations or professional inquiries.", // Ini bagian penawaran kerja samanya
+    "Open for project collaborations or professional inquiries.",
     "Let's build the future of intelligence together."
   ];
 
@@ -33,13 +33,8 @@ export default function Hero({ onNavClick }: { onNavClick: (section: string) => 
           msg.rate = 0.85;
           msg.volume = 1;
 
-          msg.onstart = () => {
-            setActiveWord(part);
-          };
-
-          msg.onend = () => {
-            resolve(null);
-          };
+          msg.onstart = () => setActiveWord(part);
+          msg.onend = () => resolve(null);
 
           const voices = window.speechSynthesis.getVoices();
           msg.voice = voices.find(v => v.name.includes('Google US English')) || 
@@ -56,10 +51,6 @@ export default function Hero({ onNavClick }: { onNavClick: (section: string) => 
   }, []);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.speechSynthesis.getVoices();
-    }
-
     const timer = setTimeout(() => {
       speakGreeting();
     }, 4500);
@@ -84,29 +75,39 @@ export default function Hero({ onNavClick }: { onNavClick: (section: string) => 
           </span>
         </div>
 
-        <div className="flex flex-col items-end gap-4 pointer-events-auto">
+        {/* --- BUTTON SUARA ELEGAN --- */}
+        <div className="flex flex-col items-end gap-3 pointer-events-auto max-w-[60%] md:max-w-none">
           <button 
             onClick={speakGreeting}
-            className={`p-4 rounded-full border border-white/10 transition-all duration-500 bg-black/40 backdrop-blur-md ${
-              isPlaying ? 'bg-cyan-500 shadow-[0_0_20px_rgba(6,182,212,0.5)] border-cyan-400' : 'hover:border-white/30'
-            }`}
+            className="relative p-4 rounded-full border border-white/10 transition-all duration-500 bg-black/40 backdrop-blur-md group"
           >
-            <Volume2 size={18} className={`${isPlaying ? 'text-black animate-pulse' : 'text-white/40'}`} />
+            {/* Animasi Lingkaran Memancar saat Bunyi */}
+            {isPlaying && (
+              <span className="absolute inset-0 rounded-full bg-cyan-500/20 animate-ping" />
+            )}
+            
+            <Waves 
+              size={20} 
+              className={`transition-all duration-500 ${
+                isPlaying ? 'text-cyan-400 rotate-90' : 'text-white/40 group-hover:text-white'
+              }`} 
+            />
           </button>
 
-          <div className="h-10 flex items-center justify-end">
+          {/* SUBTITLE */}
+          <div className="min-h-[40px] flex items-start justify-end">
             <AnimatePresence mode="wait">
               {activeWord && (
                 <motion.div
                   key={activeWord}
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -10 }}
-                  className="bg-cyan-500 text-black px-3 py-1 rounded shadow-lg"
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  className="bg-cyan-500 text-black px-3 py-1.5 rounded shadow-lg max-w-[180px] md:max-w-[400px]"
                 >
-                  <span className="font-mono text-[10px] font-black uppercase whitespace-nowrap">
+                  <p className="font-mono text-[9px] md:text-[10px] font-black uppercase leading-tight text-right break-words">
                     {activeWord}
-                  </span>
+                  </p>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -114,7 +115,7 @@ export default function Hero({ onNavClick }: { onNavClick: (section: string) => 
         </div>
       </div>
 
-      {/* --- CONTENT UTAMA (DISEJAJARKAN KE KIRI) --- */}
+      {/* CONTENT UTAMA */}
       <div className="relative z-10 flex-1 flex flex-col justify-center px-6 md:px-12 pointer-events-none md:mt-[-8vh]">
         <div className="w-full text-left">
           <h1 className="text-[12vw] md:text-8xl font-black tracking-tighter text-white leading-[0.8] uppercase">
@@ -125,7 +126,6 @@ export default function Hero({ onNavClick }: { onNavClick: (section: string) => 
           </p>
         </div>
 
-        {/* TOMBOL AKSI - TETAP DI KANAN TAPI DINAIKKAN POSISINYA */}
         <div className="flex flex-col gap-4 w-60 md:w-72 mt-12 md:mt-0 pointer-events-auto md:absolute md:top-[45%] md:-translate-y-1/2 md:right-12">
           <button 
             onClick={() => onNavClick('projects')}

@@ -12,19 +12,32 @@ import Blog from '@/components/Sections/Blog';
 import Certificates from '@/components/Sections/Certificates';
 
 export default function Home() {
-  const [activeSection, setActiveSection] = useState('home'); // Kita mulai dari 'home'
+  const [activeSection, setActiveSection] = useState('home');
 
+  // --- ANIMASI TRANSISI HALUS & SINEMATIK ---
   const sectionVariants = {
-    initial: { opacity: 0, y: 10 },
-    animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -10 }
+    initial: { 
+      opacity: 0, 
+      x: 30,             // Datang dari kanan
+      filter: "blur(10px)" 
+    },
+    animate: { 
+      opacity: 1, 
+      x: 0, 
+      filter: "blur(0px)" 
+    },
+    exit: { 
+      opacity: 0, 
+      x: -30,            // Pergi ke kiri
+      filter: "blur(10px)" 
+    }
   };
 
-  // --- LOGIKA PEMANGGILAN HALAMAN (PENTING!) ---
+  // --- LOGIKA RENDER HALAMAN ---
   const renderSection = () => {
     switch (activeSection) {
       case 'home':
-      case 'hero': // Biar aman kalau terpanggil 'hero'
+      case 'hero':
         return <Hero key="hero" onNavClick={setActiveSection} />;
       case 'about':
         return <About key="about" />;
@@ -45,22 +58,25 @@ export default function Home() {
 
   return (
     <div className="relative w-full min-h-screen overflow-hidden bg-black">
-      {/* Background global */}
+      {/* Background global agar tidak berkedip saat transisi */}
       <div className="fixed inset-0 bg-black -z-20" /> 
       
-      {/* Header dipanggil di sini agar muncul di SEMUA halaman */}
+      {/* Header tetap di atas (tidak ikut teranimasi pindah) */}
       <Header activeSection={activeSection} onNavClick={setActiveSection} />
       
-      {/* Content Area */}
+      {/* Content Area dengan AnimatePresence */}
       <div className="absolute inset-0 overflow-y-auto overflow-x-hidden">
         <AnimatePresence mode="wait">
           <motion.div
-            key={activeSection}
+            key={activeSection}           // Key unik memicu animasi saat state berubah
             variants={sectionVariants}
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{ duration: 0.3 }}
+            transition={{ 
+              duration: 0.6,              // Durasi sedikit lebih lama agar blur terasa
+              ease: [0.22, 1, 0.36, 1]    // Efek perlambatan yang halus
+            }}
             className="min-h-full w-full"
           >
             {renderSection()}
