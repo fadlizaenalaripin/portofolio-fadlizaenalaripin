@@ -3,18 +3,18 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { portfolioData } from '@/lib/data';
-import { ArrowRight, FileText, Waves } from 'lucide-react'; // Ganti ke Waves
+import { ArrowRight, FileText, Waves } from 'lucide-react'; 
 import SplineBackground from '../client/SplineBackground'
 
 export default function Hero({ onNavClick }: { onNavClick: (section: string) => void }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [activeWord, setActiveWord] = useState(''); 
   
-  const speechParts = [
+ const speechParts = [
     "Neural interface established.",
     "Welcome to the digital workspace of Fadli, Zaenal, Aripin.",
-    "Specializing in Data Intelligence and Machine Learning engineering.",
-    "Transforming complex datasets into actionable strategic assets.",
+    "Specializing in Web Development, Data Intelligence, and Machine Learning.",
+    "Building scalable applications and transforming datasets into strategic assets.",
     "System is operational and ready for new challenges.",
     "Open for project collaborations or professional inquiries.",
     "Let's build the future of intelligence together."
@@ -29,17 +29,25 @@ export default function Hero({ onNavClick }: { onNavClick: (section: string) => 
         await new Promise((resolve) => {
           const msg = new SpeechSynthesisUtterance(part);
           msg.lang = 'en-US';
-          msg.pitch = 0.5;
-          msg.rate = 0.85;
+          
+          // SETTING SUARA ROBOT BERAT
+          msg.pitch = 0.1; // Membuat suara sangat rendah/deep
+          msg.rate = 0.8;  // Sedikit lebih lambat untuk kesan mekanis
           msg.volume = 1;
 
           msg.onstart = () => setActiveWord(part);
           msg.onend = () => resolve(null);
 
           const voices = window.speechSynthesis.getVoices();
-          msg.voice = voices.find(v => v.name.includes('Google US English')) || 
-                      voices.find(v => v.name.includes('English United States')) ||
-                      voices[0];
+          // Mencari suara pria (Male) agar efek pitch rendah maksimal
+          const robotVoice = 
+            voices.find(v => v.name.includes('Microsoft David')) || 
+            voices.find(v => v.name.includes('Google US English Male')) ||
+            voices.find(v => v.name.includes('Male')) ||
+            voices.find(v => v.lang.startsWith('en')) ||
+            voices[0];
+
+          msg.voice = robotVoice;
 
           window.speechSynthesis.speak(msg);
         });
@@ -123,7 +131,7 @@ export default function Hero({ onNavClick }: { onNavClick: (section: string) => 
             DATA <br /> <span className="text-white/20">INTELLIGENCE</span>
           </h1>
           <p className="text-white/60 text-[9px] md:text-[10px] tracking-[0.5em] font-medium uppercase mt-4">
-            Specialized in <span className="text-white opacity-100 font-bold">ML</span> & <span className="text-white opacity-100 font-bold">Analytics Engineering</span>
+            Specialized in <span className="text-white opacity-100 font-bold">ML AND WEB DEVELOPMENT</span> & <span className="text-white opacity-100 font-bold">Analytics Engineering</span>
           </p>
         </div>
 
