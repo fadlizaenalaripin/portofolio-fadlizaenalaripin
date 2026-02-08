@@ -56,16 +56,17 @@ export const portfolioData = {
     },
     {
       id: 6,
-      title: "Veloce Premium E-Commerce",
-      description: "High-performance luxury retail platform with seamless transitions and lightning-fast load times.",
-      image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop", 
-      tech: ["Next.js", "TypeScript", "Stripe", "Supabase"],
-      category: "Web Development",
-      github: "https://github.com/fadlizaenalaripin",
-      link: "#",
+      title: "Smart AI Sales Dashboard",
+      description: "High-performance, Cyberpunk-inspired smart dashboard featuring AI analyst insights, universal CSV mapping, and predictive market projections.",
+      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop",
+      tech: ["Python", "FastAPI", "Next.js", "Scikit-learn", "Tailwind CSS"],
+      category: "AI & Data Science",
+      github: "https://github.com/fadlizaenalaripin/Smart-AI-Sales-Dashboard",
+      link: "https://dashboard-analitik-ai.netlify.app/",
       steps: [
-        { title: "Core Engine", desc: "Membangun sistem keranjang belanja SSR untuk performa SEO maksimal." },
-        { title: "Payment Gateway", desc: "Integrasi sistem pembayaran Stripe dengan webhook otomatis." }
+        { title: "Backend Architecture", desc: "Membangun API high-velocity dengan FastAPI dan asinkronus data caching." },
+        { title: "AI Analytics Engine", desc: "Implementasi Linear Regression dengan Scikit-learn untuk prediksi revenue masa depan." },
+        { title: "Cyber UI Design", desc: "Merancang antarmuka Glassmorphism responsif yang mendukung pemetaan kolom CSV dinamis." }
       ]
     },
     {
@@ -96,16 +97,27 @@ export const portfolioData = {
       ]
     },
     {
-      id: 5,
-      title: "Real-time Analytics Dashboard",
-      description: "Interactive dashboard processing 1M+ records daily for executive decision making.",
-      image: "/data.png", 
-      tech: ["React", "PostgreSQL", "D3.js", "Node.js"],
-      category: "Data Visualization",
-      steps: [
-        { title: "Pipeline Design", desc: "Optimasi query PostgreSQL untuk agregasi data jutaan baris." },
-        { title: "Visualization", desc: "Membuat grafik kustom interaktif yang merespon filter secara real-time." }
-      ]
+ id: 7,
+  title: "JARVIS-V1: AI Automation Engine",
+  description: "A high-performance asynchronous desktop assistant that automates workflows through intelligent voice and intent processing.",
+  image: "/jarvis.png",
+  tech: ["Python", "Asyncio", "OpenAI", "PyQt6", "Faster-Whisper"],
+  category: "AI & Automation",
+  github: "https://github.com/fadlizaenalaripin/jarvis-system-automation",
+  steps: [
+    { 
+      title: "Concurrent Execution", 
+      desc: "Architected a non-blocking system using Asyncio to handle multi-threaded tasks like voice recognition and GUI updates simultaneously." 
+    },
+    { 
+      title: "Natural Interaction", 
+      desc: "Implemented state-of-the-art STT/TTS pipelines to achieve low-latency human-machine communication." 
+    },
+    { 
+      title: "Workflow Automation", 
+      desc: "Developed custom intent-handling logic to automate third-party applications like Spotify and WhatsApp through system-level protocols." 
+    }
+  ]
     }
   ],
   contact: {

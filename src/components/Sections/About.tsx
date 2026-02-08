@@ -5,6 +5,8 @@ import { portfolioData } from '@/lib/data';
 import Image from 'next/image';
 
 export default function About() {
+  const projectCount = portfolioData.projects.length;
+
   return (
     <section
       id="about"
@@ -16,10 +18,10 @@ export default function About() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          
+
           {/* LEFT: TEXT */}
           <div className="lg:col-span-7 flex flex-col justify-start order-2 lg:order-1">
-            
+
             {/* Header */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -31,46 +33,46 @@ export default function About() {
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-12 h-[2px] bg-cyan-500/50 transition-all duration-500 group-hover/main:w-20" />
                 <span className="text-white/40 text-[10px] tracking-[0.6em] font-black uppercase italic transition-opacity duration-500">
-                  Core Architecture
+                  Technical Profile
                 </span>
               </div>
-              
+
               <h2 className="text-7xl md:text-8xl lg:text-[10rem] font-black tracking-tighter text-white leading-[0.8] mb-6">
                 ABOUT <br />
                 <span className="text-white/20 italic font-serif transition-all duration-500 group-hover/main:text-cyan-500/30">
                   ME
                 </span>
               </h2>
-              
-              {/* Badge Keahlian Ganda */}
+
+              {/* Specialized Badges */}
               <div className="flex flex-wrap gap-3 mb-8">
                 <motion.div
                   whileHover={{ y: -5 }}
                   className="bg-white/5 border border-white/10 border-l-4 border-l-cyan-500 backdrop-blur-md px-5 py-3 rounded-sm"
                 >
-                   <p className="text-white font-bold text-sm tracking-widest uppercase">
-                     Fullstack Developer
-                   </p>
-                   <p className="text-white/40 text-[9px] font-medium tracking-wider uppercase mt-1">
-                     Scalable Solutions
-                   </p>
+                  <p className="text-white font-bold text-sm tracking-widest uppercase">
+                    Fullstack Developer
+                  </p>
+                  <p className="text-white/40 text-[9px] font-medium tracking-wider uppercase mt-1">
+                    Scalable System Architecture
+                  </p>
                 </motion.div>
 
                 <motion.div
                   whileHover={{ y: -5 }}
                   className="bg-white/5 border border-white/10 border-l-4 border-l-white/40 backdrop-blur-md px-5 py-3 rounded-sm"
                 >
-                   <p className="text-white font-bold text-sm tracking-widest uppercase">
-                     Data Intelligence
-                   </p>
-                   <p className="text-white/40 text-[9px] font-medium tracking-wider uppercase mt-1">
-                     Pattern Recognition
-                   </p>
+                  <p className="text-white font-bold text-sm tracking-widest uppercase">
+                    Data Science & ML
+                  </p>
+                  <p className="text-white/40 text-[9px] font-medium tracking-wider uppercase mt-1">
+                    Intelligent Analytics
+                  </p>
                 </motion.div>
               </div>
             </motion.div>
 
-            {/* Bio Baru: Tanpa Kampus & Tanpa Stack List */}
+            {/* Bio */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -79,30 +81,50 @@ export default function About() {
               className="relative mb-12"
             >
               <div className="max-w-2xl border-l border-white/10 pl-8 space-y-6">
-                <p className="text-lg md:text-xl text-white/70 font-light leading-relaxed transition-all duration-500 hover:text-white">
-                  I am an <span className="text-white font-bold italic">Independent Developer</span> driven by the challenge of bridging complex engineering with intelligent data insights. My focus is on crafting digital ecosystems that are not just functional, but inherently smart.
+                <p className="text-lg md:text-xl text-white/70 font-light leading-relaxed transition-all duration-500 hover:text-white text-justify">
+                  I am a <span className="text-white font-bold italic">Software Engineer & Data Professional</span> focused on building the intersection of high-performance web systems and advanced data intelligence. My approach combines robust fullstack development with the analytical power of machine learning.
                 </p>
-                <p className="text-lg md:text-xl text-white/70 font-light leading-relaxed transition-all duration-500 hover:text-white">
-                  Through hands-on experience and a relentless pursuit of technical excellence, I build high-performance applications designed to solve real-world problems with precision and speed.
+                <p className="text-lg md:text-xl text-white/70 font-light leading-relaxed transition-all duration-500 hover:text-white text-justify">
+                  Whether I&apos;m architecting complex web applications or developing predictive models, I aim to create digital solutions that are both technically superior and inherently smart.
                 </p>
-                <p className="text-sm font-mono text-cyan-500/60 tracking-widest uppercase">
-                  {"// MISSION: TRANSFORMING_COMPLEXITY_INTO_LOGIC"}
+
+                {/* Strategic Pillars - New Addition */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
+                  {[
+                    { title: "Architecture", desc: "Performance first systems." },
+                    { title: "Intelligence", desc: "Data driven decision making." },
+                    { title: "Precision", desc: "Clean and scalable logic." }
+                  ].map((pillar, i) => (
+                    <div key={i} className="group/pillar">
+                      <h4 className="text-white font-black text-[10px] tracking-widest uppercase mb-1 group-hover/pillar:text-cyan-500 transition-colors">{pillar.title}</h4>
+                      <p className="text-white/30 text-[9px] leading-tight uppercase font-medium">{pillar.desc}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <p className="text-sm font-mono text-cyan-500/60 tracking-widest uppercase pt-4">
+                  {"// CORE_MISSION: BRIDGING_CODE_AND_INTELLIGENCE"}
                 </p>
               </div>
             </motion.div>
 
-            {/* Stats */}
+            {/* Dynamic Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
-              {portfolioData.about.stats.map((stat, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.05)" }}
-                  className="p-5 bg-white/[0.02] border border-white/5 rounded-2xl transition-all duration-500 cursor-default"
-                >
-                  <div className="text-3xl font-black text-white">{stat.value}</div>
-                  <div className="text-[10px] tracking-widest uppercase text-white/40 mt-1">{stat.label}</div>
-                </motion.div>
-              ))}
+              {portfolioData.about.stats.map((stat, index) => {
+                const displayValue = stat.label.toLowerCase().includes('project') ? `${projectCount}+` : stat.value;
+                const displayLabel = stat.label.toLowerCase().includes('technologies') ? 'Stack Stack' : stat.label;
+
+                return (
+                  <motion.div
+                    key={index}
+                    whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.05)" }}
+                    className="p-5 bg-white/[0.02] border border-white/5 rounded-2xl transition-all duration-500 cursor-default"
+                  >
+                    <div className="text-3xl font-black text-white">{displayValue}</div>
+                    <div className="text-[10px] tracking-widest uppercase text-white/40 mt-1">{displayLabel}</div>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
 
@@ -121,18 +143,18 @@ export default function About() {
               <div className="absolute -top-10 -left-10 text-[10rem] font-black text-white/[0.02] select-none pointer-events-none">
                 01
               </div>
-              
+
               <div className="relative w-[320px] h-[400px] md:w-[380px] md:h-[480px] bg-zinc-900 rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl group">
-                <Image 
-                  src="/fadli123.jpeg" 
+                <Image
+                  src="/fadli123.jpeg"
                   alt="Fadli Zaenal Aripin"
                   fill
                   className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
-                
+
                 <div className="absolute bottom-10 left-10 overflow-hidden">
-                  <motion.div 
+                  <motion.div
                     initial={{ y: 50 }}
                     whileInView={{ y: 0 }}
                     className="flex flex-col"
